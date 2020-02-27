@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'model/weather.dart';
 
+/// this class is facking the weather api to has data or not .. ;) ...
+/////////////////////////////////////////////////////////////////////////
 abstract class WeatherRepository {
   Future<Weather> fetchWeather(String cityName);
   Future<Weather> fetchDetailedWeather(String cityName);

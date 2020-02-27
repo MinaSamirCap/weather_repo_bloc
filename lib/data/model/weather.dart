@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 /// simple model ...
-class Weather {
+class Weather extends Equatable {
   final String cityName;
   final double temperatureCelsius;
   final double temperatureFahrenheit;
@@ -11,4 +12,8 @@ class Weather {
     @required this.temperatureCelsius,
     this.temperatureFahrenheit,
   });
+
+  @override
+  List<Object> get props =>
+      [cityName, temperatureCelsius, temperatureFahrenheit];
 }

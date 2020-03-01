@@ -77,8 +77,11 @@ class WeatherSearchPage extends StatelessWidget {
           color: Colors.lightBlue[100],
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => WeatherDetailPage(
-                masterWeather: weather,
+              builder: (_) => BlocProvider.value(
+                value: BlocProvider.of<WeatherBloc>(context),
+                child: WeatherDetailPage(
+                  masterWeather: weather,
+                ),
               ),
             ));
           },

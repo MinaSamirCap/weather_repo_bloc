@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weater_repo/bloc/weather_bloc.dart';
 
 import '../data/model/weather.dart';
 
-class WeatherDetailPage extends StatelessWidget {
+class WeatherDetailPage extends StatefulWidget {
   final Weather masterWeather;
 
   const WeatherDetailPage({
     Key key,
     @required this.masterWeather,
   }) : super(key: key);
+
+  @override
+  _WeatherDetailPageState createState() => _WeatherDetailPageState();
+}
+
+class _WeatherDetailPageState extends State<WeatherDetailPage> {
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    BlocProvider.of<WeatherBloc>(context)
+      ..add(GetDetailsWether(widget.masterWeather.cityName));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +34,17 @@ class WeatherDetailPage extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
-        //TODO: Display the weather detail using Bloc
-        child: buildLoading(),
+        child: BlocBuilder<WeatherBloc, WeatherState>(
+          builder: (ctx, state) {
+            if (state is WeatherLoading) {
+              return buildLoading();
+            } else if (state is WeatherLoaded) {
+              return buildColumnWithData(context, state.weather);
+            } else {
+              return buildLoading();
+            }
+          },
+        ),
       ),
     );
   }

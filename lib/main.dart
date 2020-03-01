@@ -8,6 +8,7 @@ void main() => runApp(MyApp());
 
 /// reference for bloc lib
 /// https://pub.dev/packages/flutter_bloc/versions/3.2.0
+/// https://www.youtube.com/watch?v=hTExlt1nJZI&list=PLB6lc7nQ1n4jCBkrirvVGr5b8rC95VAQ5&index=7
 
 class MyApp extends StatelessWidget {
   @override

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weater_repo/bloc/weather_bloc.dart';
 import 'package:weater_repo/data/model/weather.dart';
 
 import 'weather_detail_page.dart';
+
+// BlocBuilder is only for UI --> return Widget
+// BlocListener is to listen for state change --> return nothing (void)
 
 class WeatherSearchPage extends StatelessWidget {
   @override
@@ -13,8 +18,26 @@ class WeatherSearchPage extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
-        //TODO: Display the weather and loading indicator using Bloc
-        child: buildInitialInput(),
+        child: BlocListener(
+          listener: (cotxt, state){
+            if(state is WeatherError){
+              Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.message),));
+            }
+          },
+                  child: BlocBuilder<WeatherBloc, WeatherState>(
+            builder: (ctx, state) {
+              if (state is WeatherInitial) {
+                return buildInitialInput();
+              } else if (state is WeatherLoading) {
+                return buildLoading();
+              } else if (state is WeatherLoaded) {
+                return buildColumnWithData(context, state.weather);
+              } else if (state is WeatherError) {
+                return buildInitialInput();
+              }
+            },
+          ),
+        ),
       ),
     );
   }
@@ -83,5 +106,6 @@ class CityInputField extends StatelessWidget {
 
   void submitCityName(BuildContext context, String cityName) {
     //TODO: Fetch the weather from the repository and display it somehow
+    print(cityName);
   }
 }

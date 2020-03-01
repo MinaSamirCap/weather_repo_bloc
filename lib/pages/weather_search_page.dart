@@ -18,13 +18,15 @@ class WeatherSearchPage extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
-        child: BlocListener(
-          listener: (cotxt, state){
-            if(state is WeatherError){
-              Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.message),));
+        child: BlocListener<WeatherBloc, WeatherState>(
+          listener: (cotxt, state) {
+            if (state is WeatherError) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(state.message),
+              ));
             }
           },
-                  child: BlocBuilder<WeatherBloc, WeatherState>(
+          child: BlocBuilder<WeatherBloc, WeatherState>(
             builder: (ctx, state) {
               if (state is WeatherInitial) {
                 return buildInitialInput();
@@ -105,7 +107,8 @@ class CityInputField extends StatelessWidget {
   }
 
   void submitCityName(BuildContext context, String cityName) {
-    //TODO: Fetch the weather from the repository and display it somehow
     print(cityName);
+    final weatherBloc = BlocProvider.of<WeatherBloc>(context);
+    weatherBloc.add(GetWether(cityName));
   }
 }

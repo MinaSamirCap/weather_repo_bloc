@@ -6,17 +6,21 @@ import 'package:weater_repo/pages/weather_search_page.dart';
 
 void main() => runApp(MyApp());
 
+/// reference for bloc lib
+/// https://pub.dev/packages/flutter_bloc/versions/3.2.0
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Weather App',
       home: BlocProvider(
-          builder: (ctx) {
-            tryAsyncAndYield();
-            return WeatherBloc(FakeWeatherRepository());
-          },
-          child: WeatherSearchPage()),
+        create: (ctx) {
+          tryAsyncAndYield();
+          return WeatherBloc(FakeWeatherRepository());
+        },
+        child: WeatherSearchPage(),
+      ),
     );
   }
 

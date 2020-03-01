@@ -36,6 +36,8 @@ class WeatherSearchPage extends StatelessWidget {
                 return buildColumnWithData(context, state.weather);
               } else if (state is WeatherError) {
                 return buildInitialInput();
+              } else {
+                return buildInitialInput();
               }
             },
           ),

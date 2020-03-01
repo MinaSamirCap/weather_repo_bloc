@@ -21,7 +21,7 @@ class WeatherSearchPage extends StatelessWidget {
         child: BlocListener<WeatherBloc, WeatherState>(
           listener: (cotxt, state) {
             if (state is WeatherError) {
-              Scaffold.of(context).showSnackBar(SnackBar(
+              Scaffold.of(cotxt).showSnackBar(SnackBar(
                 content: Text(state.message),
               ));
             }
